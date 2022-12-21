@@ -11,4 +11,4 @@ COPY --from=builder \
     /ferris-says/fuzz/target/x86_64-unknown-linux-gnu/release/ferris-fuzz-files \
     /
 
-COPY --from=builder /ferris-says/target/x86_64-unknown-linux-gnu/release/fsays /bin/
+COPY --from=builder /ferris-says/target/release/fsays /bin/
