@@ -60,22 +60,31 @@ jobs:
 
   mayhem:
     needs: build
-    name: 'fuzz ${{ matrix.mayhemfile }}'
+    name: 'fuzz ${{ matrix.lib_mayhemfile }} and ${{ matrix.files_mayhemfile }}'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        mayhemfile:
-          - mayhem/Mayhemfile
+        lib_mayhemfile:
+          - mayhem/lib-fuzz.Mayhemfile
+        files_mayhemfile:
+          - mayhem/files-fuzz.Mayhemfile
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Start analysis for ${{ matrix.mayhemfile }}
+      - name: Start analysis for ${{ matrix.lib_mayhemfile }}
         uses: ForAllSecure/mcode-action@v1
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
-          args: --image ${{ needs.build.outputs.image }} --file ${{ matrix.mayhemfile }} --duration 300
+          args: --image ${{ needs.build.outputs.image }} --file ${{ matrix.lib_mayhemfile }} --duration 300
+          sarif-output: sarif
+
+      - name: Start analysis for ${{ matrix.files_mayhemfile }}
+        uses: ForAllSecure/mcode-action@v1
+        with:
+          mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
+          args: --image ${{ needs.build.outputs.image }} --file ${{ matrix.files_mayhemfile }} --duration 300
           sarif-output: sarif
 
       - name: Upload SARIF file(s)

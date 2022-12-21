@@ -1,0 +1,6 @@
+project: ferris-says
+target: ferris-fuzz-files
+
+cmds:
+    - cmd: ./ferris-fuzz-files
+      libfuzzer: true
