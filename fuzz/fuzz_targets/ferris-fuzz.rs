@@ -1,13 +1,18 @@
 #![no_main]
+
+use arbitrary::Arbitrary;
 use libfuzzer_sys::fuzz_target;
 
 use ferris_says::say;
 use std::io::BufWriter;
 
-fuzz_target!(|data: &[u8]| {
-    let width = 24;
-    let mut buffer = vec![0; 8196];
+#[derive(Arbitrary, Debug)]
+struct FuzzInput {
+    input: String,
+    width: usize,
+}
 
-    let mut writer = BufWriter::new(buffer);
-    say(data, width, &mut writer);
+fuzz_target!(|data: FuzzInput| {
+    let mut writer = BufWriter::new(vec![0; 8196]);
+    say(&data.input, data.width, &mut writer).unwrap();
 });
