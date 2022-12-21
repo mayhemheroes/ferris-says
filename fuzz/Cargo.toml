@@ -9,6 +9,7 @@ edition = "2018"
 cargo-fuzz = true
 
 [dependencies]
+assert_fs = "1.0.1"
 arbitrary = { version = "1.2.0", features = ["derive"] }
 libfuzzer-sys = "0.4"
 
@@ -22,5 +23,11 @@ members = ["."]
 [[bin]]
 name = "ferris-fuzz"
 path = "fuzz_targets/ferris-fuzz.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "ferris-fuzz-files"
+path = "fuzz_targets/ferris-fuzz-files.rs"
 test = false
 doc = false

@@ -4,3 +4,5 @@ target: ferris-fuzz
 cmds:
     - cmd: ./ferris-fuzz
       libfuzzer: true
+    - cmd: ./ferris-fuzz-files
+      libfuzzer: true
