@@ -1,4 +1,6 @@
-FROM ghcr.io/evanrichter/cargo-fuzz as builder
+FROM rustlang/rust:nightly AS builder
+
+RUN cargo install cargo-fuzz
 
 ADD . /ferris-says
 WORKDIR /ferris-says/fuzz
